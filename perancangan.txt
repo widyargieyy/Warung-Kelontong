@@ -1,0 +1,192 @@
+Kebutuhan User Sistem Informasi Manajemen Toko Kelontong
+| Role      | Kebutuhan / Tugas                                                    |
+| --------- | -------------------------------------------------------------------- |
+| **Admin** | Mengelola seluruh data toko, stok, supplier, laporan, dan akun kasir |
+| **Kasir** | Melakukan transaksi penjualan barang                                 |
+
+1. Kebutuhan User: Admin
+| No | Kebutuhan User                                     |
+| -- | -------------------------------------------------- |
+| 1  | Login ke sistem                                    |
+| 2  | Mengelola profil akun                              |
+| 3  | Mengelola data barang (tambah, edit, hapus, lihat) |
+| 4  | Mengelola kategori barang                          |
+| 5  | Mengelola data supplier                            |
+| 6  | Mengelola stok barang masuk                        |
+| 7  | Melihat daftar stok barang                         |
+| 8  | Mengelola harga barang                             |
+| 9  | Melihat riwayat transaksi penjualan                |
+| 10 | Melihat laporan penjualan harian                   |
+| 11 | Melihat laporan penjualan bulanan                  |
+| 12 | Melihat barang paling laris                        |
+| 13 | Melihat stok barang menipis                        |
+| 14 | Mengelola akun kasir                               |
+| 15 | Logout dari sistem                                 |
+
+Hak Akses Admin
+✅ CRUD barang
+✅ CRUD kategori
+✅ CRUD supplier
+✅ Kelola stok
+✅ Lihat laporan
+✅ Kelola akun kasir
+✅ Lihat transaksi
+
+2. Kebutuhan User: Kasir
+| No | Kebutuhan User                       |
+| -- | ------------------------------------ |
+| 1  | Login ke sistem                      |
+| 2  | Mengelola profil akun                |
+| 3  | Melihat daftar barang                |
+| 4  | Mencari barang                       |
+| 5  | Melakukan transaksi penjualan        |
+| 6  | Menginput jumlah barang              |
+| 7  | Menghitung total pembayaran otomatis |
+| 8  | Menginput pembayaran pelanggan       |
+| 9  | Menampilkan kembalian otomatis       |
+| 10 | Mencetak struk transaksi             |
+| 11 | Melihat riwayat transaksi pribadi    |
+| 12 | Logout dari sistem                   |
+
+Hak Akses Kasir
+
+✅ Transaksi penjualan
+✅ Lihat barang
+✅ Cari barang
+✅ Cetak struk
+❌ Tidak bisa edit barang
+❌ Tidak bisa ubah stok manual
+❌ Tidak bisa lihat laporan penuh
+❌ Tidak bisa kelola user
+
+Modul Sistem
+| Modul               | Admin | Kasir        |
+| ------------------- | ----- | ------------ |
+| Login               | ✅     | ✅            |
+| Dashboard           | ✅     | ✅            |
+| Data Barang         | ✅     | 👀 View Only |
+| Kategori Barang     | ✅     | ❌            |
+| Supplier            | ✅     | ❌            |
+| Stok Barang         | ✅     | 👀 View Only |
+| Transaksi Penjualan | ✅     | ✅            |
+| Laporan Penjualan   | ✅     | ❌            |
+| Manajemen User      | ✅     | ❌            |
+| Profil              | ✅     | ✅            |
+
+Flow Sistem
+Admin input barang & stok
+            ↓
+Kasir melakukan transaksi
+            ↓
+Stok berkurang otomatis
+            ↓
+Data penjualan tersimpan
+            ↓
+Admin melihat laporan
+
+=====================DATABASE====================
+1. users
+| Field      |      Type | Length | Constraint       |
+| ---------- | --------: | -----: | ---------------- |
+| id         |    BIGINT |      - | PK, AI           |
+| nama       |   VARCHAR |    100 | NOT NULL         |
+| username   |   VARCHAR |     50 | UNIQUE, NOT NULL |
+| password   |   VARCHAR |    255 | NOT NULL         |
+| role       |      ENUM |      - | admin, kasir     |
+| no_hp      |   VARCHAR |     20 | NULL             |
+| alamat     |      TEXT |      - | NULL             |
+| created_at | TIMESTAMP |      - | NULL             |
+| updated_at | TIMESTAMP |      - | NULL             |
+
+2. kategori
+| Field         |      Type | Length | Constraint |
+| ------------- | --------: | -----: | ---------- |
+| id            |    BIGINT |      - | PK, AI     |
+| nama_kategori |   VARCHAR |    100 | NOT NULL   |
+| deskripsi     |      TEXT |      - | NULL       |
+| created_at    | TIMESTAMP |      - | NULL       |
+| updated_at    | TIMESTAMP |      - | NULL       |
+
+3. supplier
+| Field         |      Type | Length | Constraint |
+| ------------- | --------: | -----: | ---------- |
+| id            |    BIGINT |      - | PK, AI     |
+| nama_supplier |   VARCHAR |    100 | NOT NULL   |
+| no_hp         |   VARCHAR |     20 | NULL       |
+| alamat        |      TEXT |      - | NULL       |
+| created_at    | TIMESTAMP |      - | NULL       |
+| updated_at    | TIMESTAMP |      - | NULL       |
+
+
+4. barang
+| Field       |      Type | Length | Constraint |
+| ----------- | --------: | -----: | ---------- |
+| id          |    BIGINT |      - | PK, AI     |
+| kategori_id |    BIGINT |      - | FK         |
+| supplier_id |    BIGINT |      - | FK         |
+| kode_barang |   VARCHAR |     50 | UNIQUE     |
+| nama_barang |   VARCHAR |    100 | NOT NULL   |
+| harga_beli  |   DECIMAL |   12,2 | NOT NULL   |
+| harga_jual  |   DECIMAL |   12,2 | NOT NULL   |
+| stok        |       INT |      - | DEFAULT 0  |
+| satuan      |   VARCHAR |     20 | NOT NULL   |
+| created_at  | TIMESTAMP |      - | NULL       |
+| updated_at  | TIMESTAMP |      - | NULL       |
+Foreign Key
+kategori_id → kategori.id
+supplier_id → supplier.id
+
+5. penjualan
+| Field             |      Type | Length | Constraint |
+| ----------------- | --------: | -----: | ---------- |
+| id                |    BIGINT |      - | PK, AI     |
+| user_id           |    BIGINT |      - | FK         |
+| tanggal_penjualan |  DATETIME |      - | NOT NULL   |
+| total_harga       |   DECIMAL |   12,2 | NOT NULL   |
+| uang_bayar        |   DECIMAL |   12,2 | NOT NULL   |
+| kembalian         |   DECIMAL |   12,2 | NOT NULL   |
+| created_at        | TIMESTAMP |      - | NULL       |
+| updated_at        | TIMESTAMP |      - | NULL       |
+Foreign Key
+user_id → users.id
+
+
+6. detail_penjualan
+| Field        |      Type | Length | Constraint |
+| ------------ | --------: | -----: | ---------- |
+| id           |    BIGINT |      - | PK, AI     |
+| penjualan_id |    BIGINT |      - | FK         |
+| barang_id    |    BIGINT |      - | FK         |
+| jumlah       |       INT |      - | NOT NULL   |
+| harga        |   DECIMAL |   12,2 | NOT NULL   |
+| subtotal     |   DECIMAL |   12,2 | NOT NULL   |
+| created_at   | TIMESTAMP |      - | NULL       |
+| updated_at   | TIMESTAMP |      - | NULL       |
+Foreign Key
+penjualan_id → penjualan.id
+barang_id → barang.id
+
+7. stok masuk
+| Field         |      Type | Length | Constraint |
+| ------------- | --------: | -----: | ---------- |
+| id            |    BIGINT |      - | PK, AI     |
+| barang_id     |    BIGINT |      - | FK         |
+| supplier_id   |    BIGINT |      - | FK         |
+| jumlah_masuk  |       INT |      - | NOT NULL   |
+| tanggal_masuk |  DATETIME |      - | NOT NULL   |
+| keterangan    |      TEXT |      - | NULL       |
+| created_at    | TIMESTAMP |      - | NULL       |
+| updated_at    | TIMESTAMP |      - | NULL       |
+Foreign Key
+barang_id → barang.id
+supplier_id → supplier.id
+
+
+relasi:
+users (1) -------- (N) penjualan
+kategori (1) ----- (N) barang
+supplier (1) ----- (N) barang
+supplier (1) ----- (N) stok_masuk
+barang (1) ------- (N) stok_masuk
+penjualan (1) ---- (N) detail_penjualan
+barang (1) ------- (N) detail_penjualan
