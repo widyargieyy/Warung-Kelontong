@@ -1,0 +1,56 @@
++======================================================================================================+
+| LOGO TOKO                                TRANSAKSI PENJUALAN                    [Kasir ▼][Logout]   |
++======================================================================================================+
+
++----------------------+----------------------------------------------------------------+
+| SIDEBAR              | TRANSAKSI BARU                                                 |
+|----------------------|----------------------------------------------------------------|
+| 🏠 Dashboard         | Cari Barang : [_____________________] [Cari]                   |
+| 🛒 Transaksi         |                                                                |
+| 📦 Data Barang       | +------------------------------------------------------------+ |
+| 👤 Profil            | | Kode | Nama Barang     | Harga      | Stok | Action      | |
+| 🚪 Logout            | +------------------------------------------------------------+ |
+|                      | | BRG001 | Indomie Goreng | Rp 3.500 | 20 | [Tambah]     | |
+|                      | | BRG002 | Aqua Botol     | Rp 5.000 | 15 | [Tambah]     | |
+|                      | +------------------------------------------------------------+ |
+|                      |                                                                |
+|                      | ============================================================   |
+|                      | Keranjang Belanja                                             |
+|                      | ------------------------------------------------------------   |
+|                      | +------------------------------------------------------------+ |
+|                      | | Barang           | Qty | Harga      | Subtotal | Action | |
+|                      | +------------------------------------------------------------+ |
+|                      | | Indomie Goreng   | 2   | Rp 3.500   | Rp 7.000 | Hapus | |
+|                      | | Aqua Botol       | 1   | Rp 5.000   | Rp 5.000 | Hapus | |
+|                      | +------------------------------------------------------------+ |
+|                      |                                                                |
+|                      | Total Belanja : Rp 12.000                                     |
+|                      |                                                                |
+|                      | Uang Bayar    : [____________]                                |
+|                      | Kembalian     : Rp 8.000                                      |
+|                      |                                                                |
+|                      | [ Simpan Transaksi ]   [ Reset ]                               |
++----------------------+----------------------------------------------------------------+
+
+
+| No | Komponen UI              | Tabel Database              | Field yang Dipakai                                 | Relasi                                           | Logic / Query                   |
+| -- | ------------------------ | --------------------------- | -------------------------------------------------- | ------------------------------------------------ | ------------------------------- |
+| 1  | Nama Kasir Login         | `users`                     | `name`                                             | -                                                | `auth()->user()->name`          |
+| 2  | Cari Barang              | `barangs`                   | `kode_barang`, `nama_barang`                       | -                                                | Search berdasarkan nama/kode    |
+| 3  | List Barang              | `barangs`                   | `kode_barang`, `nama_barang`, `harga_jual`, `stok` | -                                                | Menampilkan barang tersedia     |
+| 4  | Tombol Tambah Barang     | `barangs`                   | seluruh data barang                                | `barangs.id`                                     | Masuk ke session/cart           |
+| 5  | Keranjang Belanja        | `session/cart`              | temporary data                                     | -                                                | Data sementara sebelum checkout |
+| 6  | Nama Barang di Keranjang | `barangs`                   | `nama_barang`                                      | `barangs.id`                                     | Ditampilkan di cart             |
+| 7  | Qty Barang               | input user                  | -                                                  | -                                                | User input jumlah               |
+| 8  | Harga Barang             | `barangs`                   | `harga_jual`                                       | -                                                | Harga saat tambah cart          |
+| 9  | Subtotal                 | session/cart                | qty × harga                                        | -                                                | Per item                        |
+| 10 | Total Belanja            | session/cart → `penjualans` | `total_harga`                                      | -                                                | `SUM(subtotal)`                 |
+| 11 | Uang Bayar               | `penjualans`                | `uang_bayar`                                       | -                                                | Input user                      |
+| 12 | Kembalian                | `penjualans`                | `kembalian`                                        | -                                                | `uang_bayar - total_harga`      |
+| 13 | Simpan Header Transaksi  | `penjualans`                | semua field                                        | `users.id → penjualans.user_id`                  | Simpan transaksi utama          |
+| 14 | Simpan Detail Transaksi  | `detail_penjualans`         | semua field                                        | `penjualans.id → detail_penjualans.penjualan_id` | Simpan item per barang          |
+| 15 | Pengurangan Stok         | `barangs`                   | `stok`                                             | `barangs.id → detail_penjualans.barang_id`       | `stok - qty`                    |
+| 16 | Reset Keranjang          | session/cart                | -                                                  | -                                                | Hapus cart sementara            |
+
+
+

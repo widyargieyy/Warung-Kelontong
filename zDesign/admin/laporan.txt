@@ -1,0 +1,72 @@
++=====================================================================================================+
+| LOGO TOKO                                     LAPORAN                    [Admin ▼][Logout]         |
++=====================================================================================================+
+
++----------------------+------------------------------------------------------------------+
+| SIDEBAR              | LAPORAN                                                         |
+|----------------------|------------------------------------------------------------------|
+| 🏠 Dashboard         | Jenis Laporan : [ Penjualan ▼ ]                                |
+| 📦 Barang            | Dari Tanggal : [ 01/05/2026 ]                                  |
+| 📂 Kategori          | Sampai Tanggal : [ 11/05/2026 ]                                |
+| 🚚 Supplier          | [ Tampilkan ] [ Cetak PDF ]                                    |
+| 📥 Stok Masuk        |                                                                  |
+| 🛒 Penjualan         | +----------------------------------------------------------------+
+| 📊 Laporan           | | Tanggal | Kasir | Total | Bayar | Kembalian                |
+| 👤 Profil            | +----------------------------------------------------------------+
+| 🚪 Logout            | |10/05/26| Ahmad |24000 |30000 |6000                         |
+|                      | |11/05/26| Dika  |12000 |20000 |8000                         |
+|                      | +----------------------------------------------------------------+
+|                      |                                                                  |
+|                      | Total Penjualan : Rp 36.000                                    |
++----------------------+------------------------------------------------------------------+
+
+| No | Komponen UI         | Tabel Database            | Field yang Dipakai                   | Relasi  | Logic                |
+| -- | ------------------- | ------------------------- | ------------------------------------ | ------- | -------------------- |
+| 1  | Pilih Jenis Laporan | -                         | -                                    | -       | Penjualan / Stok     |
+| 2  | Filter Tanggal      | `penjualan`, `stok_masuk` | `tanggal_penjualan`, `tanggal_masuk` | -       | Filter range tanggal |
+| 3  | Tampilkan Data      | `penjualan`, `users`      | seluruh transaksi                    | FK user | Menampilkan laporan  |
+| 4  | Total Penjualan     | `penjualan`               | `total_harga`                        | -       | SUM total            |
+| 5  | Cetak PDF           | query laporan             | -                                    | -       | Export PDF           |
+
+
+1A. Laporan Penjualan
++=====================================================================+
+|                      LAPORAN PENJUALAN                              |
++=====================================================================+
+| Dari : 01 Mei 2026                                                  |
+| Sampai : 11 Mei 2026                                                |
++=====================================================================+
+| Tanggal | Kasir | Total | Bayar | Kembalian                        |
+|---------------------------------------------------------------------|
+| 10/05   | Ahmad |24000 |30000 |6000                                |
+| 11/05   | Dika  |12000 |20000 |8000                                |
+|---------------------------------------------------------------------|
+| TOTAL PENJUALAN : Rp 36.000                                         |
++=====================================================================+
+
+| UI Laporan | Database    | Field               |
+| ---------- | ----------- | ------------------- |
+| Tanggal    | `penjualan` | `tanggal_penjualan` |
+| Nama Kasir | `users`     | `nama`              |
+| Total      | `penjualan` | `total_harga`       |
+| Bayar      | `penjualan` | `uang_bayar`        |
+| Kembalian  | `penjualan` | `kembalian`         |
+
+
++=====================================================================+
+|                      LAPORAN STOK BARANG                            |
++=====================================================================+
+| Kode | Nama Barang | Stok | Harga Jual | Satuan                   |
+|---------------------------------------------------------------------|
+| BR01 | Indomie     | 20   | 3500        | pcs                     |
+| BR02 | Aqua        | 15   | 5000        | botol                  |
+| BR03 | Beras       | 8    | 65000       | kg                     |
++=====================================================================+
+
+| UI Laporan  | Database | Field         |
+| ----------- | -------- | ------------- |
+| Kode Barang | `barang` | `kode_barang` |
+| Nama Barang | `barang` | `nama_barang` |
+| Stok        | `barang` | `stok`        |
+| Harga Jual  | `barang` | `harga_jual`  |
+| Satuan      | `barang` | `satuan`      |

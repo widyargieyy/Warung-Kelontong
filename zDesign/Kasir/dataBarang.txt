@@ -1,0 +1,51 @@
++=====================================================================================================+
+| LOGO TOKO                                DATA BARANG KASIR                    [Kasir ▼][Logout]    |
++=====================================================================================================+
+
++----------------------+------------------------------------------------------------------+
+| SIDEBAR              | DATA BARANG                                                      |
+|----------------------|------------------------------------------------------------------|
+| 🏠 Dashboard         | Cari Barang : [___________________] [Cari]                       |
+| 🛒 Transaksi         |                                                                  |
+| 📦 Data Barang       | +----------------------------------------------------------------+
+| 👤 Profil            | |Kode    | Nama Barang     | Harga | Stok | Satuan | Detail   |
+| 🚪 Logout            | +----------------------------------------------------------------+
+|                      | | BR001  | Indomie Goreng  | 3500  | 20    | pcs    | 👁      |
+|                      | | BR002  | Aqua Botol      | 5000  | 15    | botol  | 👁      |
+|                      | | BR003  | Teh Pucuk       | 4000  | 0     | botol  | 👁      |
+|                      | +----------------------------------------------------------------+
+|                      |                                                                  |
+|                      | [<< Prev] 1 2 3 [Next >>]                                        |
++----------------------+------------------------------------------------------------------+
+
+
++===================================+
+| DETAIL BARANG                    |
++===================================+
+| Kode Barang : BR001              |
+| Nama Barang : Indomie Goreng     |
+| Kategori    : Makanan            |
+| Supplier    : PT Indofood        |
+| Harga Jual  : Rp 3.500           |
+| Stok        : 20                 |
+| Satuan      : pcs                |
++===================================+
+|           [Tutup]                |
++===================================+
+
+
+| No | Komponen UI      | Tabel Database | Field yang Dipakai           | Relasi                             | Logic / Query                   |
+| -- | ---------------- | -------------- | ---------------------------- | ---------------------------------- | ------------------------------- |
+| 1  | Nama Kasir Login | `users`        | `nama`                       | -                                  | `auth()->user()->nama`          |
+| 2  | Role User        | `users`        | `role`                       | -                                  | Validasi role = `kasir`         |
+| 3  | Search Barang    | `barang`       | `kode_barang`, `nama_barang` | -                                  | Cari berdasarkan nama atau kode |
+| 4  | List Barang      | `barang`       | seluruh data barang          | -                                  | Menampilkan daftar barang       |
+| 5  | Kode Barang      | `barang`       | `kode_barang`                | -                                  | Ditampilkan di tabel            |
+| 6  | Nama Barang      | `barang`       | `nama_barang`                | -                                  | Ditampilkan di tabel            |
+| 7  | Harga Barang     | `barang`       | `harga_jual`                 | -                                  | Format rupiah                   |
+| 8  | Stok Barang      | `barang`       | `stok`                       | -                                  | Menampilkan stok saat ini       |
+| 9  | Satuan Barang    | `barang`       | `satuan`                     | -                                  | Ditampilkan di tabel            |
+| 10 | Detail Barang    | `barang`       | seluruh field barang         | `barang.id`                        | Menampilkan detail barang       |
+| 11 | Nama Kategori    | `kategori`     | `nama_kategori`              | `barang.kategori_id → kategori.id` | Ditampilkan saat detail barang  |
+| 12 | Nama Supplier    | `supplier`     | `nama_supplier`              | `barang.supplier_id → supplier.id` | Ditampilkan saat detail barang  |
+| 13 | Pagination       | `barang`       | seluruh data                 | -                                  | `paginate(10)`                  |

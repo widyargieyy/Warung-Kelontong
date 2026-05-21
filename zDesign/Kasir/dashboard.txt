@@ -1,0 +1,48 @@
++=====================================================================================================+
+| LOGO TOKO                                  DASHBOARD KASIR                         [Kasir ▼][Logout]|
++=====================================================================================================+
+
++----------------------+--------------------------------------------------------------+
+| SIDEBAR              | DASHBOARD                                                    |
+|----------------------|--------------------------------------------------------------|
+| 🏠 Dashboard         | Selamat Datang, Ahmad Kasir                                  |
+| 🛒 Transaksi         | Hari: Senin, 11 Mei 2026                                     |
+| 📦 Data Barang       |                                                              |
+| 👤 Profil            | +----------------+ +----------------+ +-------------------+ |
+| 🚪 Logout            | | Transaksi Hari | | Total Produk  | | Barang Tersedia | |
+|                      | |      23        | |      152      | |       148       | |
+|                      | +----------------+ +----------------+ +-------------------+ |
+|                      |                                                              |
+|                      | ==========================================================   |
+|                      | Akses Cepat                                                  |
+|                      | ----------------------------------------------------------   |
+|                      | [ Mulai Transaksi ]   [ Lihat Barang ]                      |
+|                      |                                                              |
+|                      | ==========================================================   |
+|                      | Riwayat Transaksi Saya Hari Ini                              |
+|                      | ----------------------------------------------------------   |
+|                      | +----+-----------+-------------+------------+------------+ |
+|                      | |No  | Tanggal   | Total       | Bayar      | Kembalian | |
+|                      | +----+-----------+-------------+------------+------------+ |
+|                      | | 1  | 10:21     | Rp 24.000   | Rp 30.000  | Rp 6.000  | |
+|                      | | 2  | 11:00     | Rp 12.000   | Rp 20.000  | Rp 8.000  | |
+|                      | +----+-----------+-------------+------------+------------+ |
+|                      | [Lihat Semua Transaksi]                                      |
++----------------------+--------------------------------------------------------------+
+
+
+        
+| No | Komponen UI               | Tabel Database | Field yang Dipakai                                            | Relasi                          | Query / Logic                               |
+| -- | ------------------------- | -------------- | ------------------------------------------------------------- | ------------------------------- | ------------------------------------------- |
+| 1  | Nama Kasir Login          | `users`        | `name`                                                        | -                               | Ambil user login (`auth()->user()->name`)   |
+| 2  | Role User                 | `users`        | `role`                                                        | -                               | Validasi role = `kasir`                     |
+| 3  | Jumlah Transaksi Hari Ini | `penjualans`   | `user_id`, `tanggal_penjualan`                                | `users.id → penjualans.user_id` | Hitung transaksi hari ini milik kasir login |
+| 4  | Total Produk              | `barangs`      | `id`                                                          | -                               | `COUNT(*)` semua barang                     |
+| 5  | Barang Tersedia           | `barangs`      | `stok`                                                        | -                               | Hitung barang dengan `stok > 0`             |
+| 6  | Tombol Mulai Transaksi    | -              | -                                                             | -                               | Redirect ke halaman transaksi               |
+| 7  | Tombol Lihat Barang       | `barangs`      | seluruh field barang                                          | -                               | Menampilkan data barang                     |
+| 8  | Riwayat Transaksi Saya    | `penjualans`   | `tanggal_penjualan`, `total_harga`, `uang_bayar`, `kembalian` | `users.id → penjualans.user_id` | Ambil transaksi milik kasir login           |
+| 9  | Waktu Transaksi           | `penjualans`   | `tanggal_penjualan`                                           | -                               | Format jam dari datetime                    |
+| 10 | Total Pembayaran          | `penjualans`   | `total_harga`                                                 | -                               | Ditampilkan format rupiah                   |
+| 11 | Uang Bayar                | `penjualans`   | `uang_bayar`                                                  | -                               | Ditampilkan format rupiah                   |
+| 12 | Kembalian                 | `penjualans`   | `kembalian`                                                   | -                               | Ditampilkan format rupiah                   |

@@ -1,0 +1,33 @@
++=====================================================================================================+
+| LOGO TOKO                                   DATA PENJUALAN                [Admin ▼][Logout]        |
++=====================================================================================================+
+
++----------------------+------------------------------------------------------------------+
+| SIDEBAR              | DATA PENJUALAN                                                 |
+|----------------------|------------------------------------------------------------------|
+| 🏠 Dashboard         | Cari Transaksi : [___________________] [Cari]                 |
+| 📦 Barang            | Filter Tanggal : [ 11/05/2026 ] [Filter]                      |
+| 📂 Kategori          |                                                                  |
+| 🚚 Supplier          | +----------------------------------------------------------------+
+| 📥 Stok Masuk        | | Tanggal | Kasir | Total | Bayar | Kembalian | Action       |
+| 🛒 Penjualan         | +----------------------------------------------------------------+
+| 📊 Laporan           | |10:21 | Ahmad |24000 |30000 |6000 | 👁                    |
+| 👤 Profil            | |11:05 | Dika  |12000 |20000 |8000 | 👁                    |
+| 🚪 Logout            | +----------------------------------------------------------------+
+|                      |                                                                  |
+|                      | [<< Prev] 1 2 3 [Next >>]                                      |
++----------------------+------------------------------------------------------------------+
+
+| No | Komponen UI      | Tabel Database     | Field yang Dipakai        | Relasi                         | Logic / Query          |
+| -- | ---------------- | ------------------ | ------------------------- | ------------------------------ | ---------------------- |
+| 1  | Nama Admin Login | `users`            | `nama`                    | -                              | `auth()->user()->nama` |
+| 2  | Search Penjualan | `penjualan`        | `id`, `tanggal_penjualan` | -                              | Cari transaksi         |
+| 3  | Filter Tanggal   | `penjualan`        | `tanggal_penjualan`       | -                              | Filter harian          |
+| 4  | List Penjualan   | `penjualan`        | seluruh field             | FK users                       | Menampilkan transaksi  |
+| 5  | Nama Kasir       | `users`            | `nama`                    | `penjualan.user_id → users.id` | Join user              |
+| 6  | Total Harga      | `penjualan`        | `total_harga`             | -                              | Format rupiah          |
+| 7  | Uang Bayar       | `penjualan`        | `uang_bayar`              | -                              | Format rupiah          |
+| 8  | Kembalian        | `penjualan`        | `kembalian`               | -                              | Format rupiah          |
+| 9  | Detail Penjualan | `detail_penjualan` | seluruh detail transaksi  | FK barang                      | Modal detail           |
+| 10 | Pagination       | `penjualan`        | seluruh data              | -                              | `paginate(10)`         |
+

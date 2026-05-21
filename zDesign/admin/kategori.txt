@@ -1,0 +1,48 @@
++=====================================================================================================+
+| LOGO TOKO                                  DATA KATEGORI                   [Admin ▼][Logout]       |
++=====================================================================================================+
+
++----------------------+------------------------------------------------------------------+
+| SIDEBAR              | DATA KATEGORI                                                  |
+|----------------------|------------------------------------------------------------------|
+| 🏠 Dashboard         | Cari Kategori : [___________________] [Cari]                  |
+| 📦 Barang            |                                                                  |
+| 📂 Kategori          | [ + Tambah Kategori ]                                           |
+| 🚚 Supplier          |                                                                  |
+| 📥 Stok Masuk        | +----------------------------------------------------------------+
+| 🛒 Penjualan         | | No | Nama Kategori | Deskripsi          | Action            |
+| 📊 Laporan           | +----------------------------------------------------------------+
+| 👤 Profil            | | 1  | Minuman        | Produk minuman    | 👁 ✏ 🗑           |
+| 🚪 Logout            | | 2  | Sembako        | Kebutuhan pokok   | 👁 ✏ 🗑           |
+|                      | | 3  | Snack          | Makanan ringan    | 👁 ✏ 🗑           |
+|                      | +----------------------------------------------------------------+
+|                      |                                                                  |
+|                      | [<< Prev] 1 2 3 [Next >>]                                      |
++----------------------+------------------------------------------------------------------+
+
+
+| No | Komponen UI      | Tabel Database | Field yang Dipakai | Relasi | Logic / Query          |
+| -- | ---------------- | -------------- | ------------------ | ------ | ---------------------- |
+| 1  | Nama Admin Login | `users`        | `nama`             | -      | `auth()->user()->nama` |
+| 2  | Search Kategori  | `kategori`     | `nama_kategori`    | -      | Cari kategori          |
+| 3  | Tombol Tambah    | `kategori`     | semua field        | -      | Create kategori        |
+| 4  | List Kategori    | `kategori`     | seluruh data       | -      | Menampilkan kategori   |
+| 5  | Nama Kategori    | `kategori`     | `nama_kategori`    | -      | Ditampilkan tabel      |
+| 6  | Deskripsi        | `kategori`     | `deskripsi`        | -      | Ditampilkan tabel      |
+| 7  | Detail Kategori  | `kategori`     | semua field        | -      | Modal detail           |
+| 8  | Edit Kategori    | `kategori`     | semua field        | -      | Update kategori        |
+| 9  | Hapus Kategori   | `kategori`     | `id`               | -      | Delete kategori        |
+| 10 | Pagination       | `kategori`     | seluruh data       | -      | `paginate(10)`         |
+
++==============================================+
+|              DETAIL KATEGORI                 |
++==============================================+
+| Nama Kategori : Minuman                      |
+| Deskripsi     : Produk minuman kemasan       |
+| Dibuat Pada   : 10 Mei 2026                  |
+| Diupdate      : 11 Mei 2026                  |
++==============================================+
+|                 [ Tutup ]                    |
++==============================================+
+
+

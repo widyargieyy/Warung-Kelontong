@@ -1,0 +1,126 @@
++=====================================================================================================+
+| LOGO TOKO                                   DATA BARANG                    [Admin ▼][Logout]       |
++=====================================================================================================+
+
++----------------------+------------------------------------------------------------------+
+| SIDEBAR              | DATA BARANG                                                     |
+|----------------------|------------------------------------------------------------------|
+| 🏠 Dashboard         | Cari Barang : [___________________] [Cari]                     |
+| 📦 Barang            |                                                                  |
+| 📂 Kategori          | [ + Tambah Barang ]                                             |
+| 🚚 Supplier          |                                                                  |
+| 📥 Stok Masuk        | +----------------------------------------------------------------+
+| 🛒 Penjualan         | |Kode | Nama Barang | Kategori | Harga | Stok | Action       |
+| 📊 Laporan           | +----------------------------------------------------------------+
+| 👤 Profil            | |BR01 | Indomie     | Mie       | 3500  | 20    | 👁 ✏ 🗑     |
+| 🚪 Logout            | |BR02 | Aqua Botol  | Minuman   | 5000  | 15    | 👁 ✏ 🗑     |
+|                      | |BR03 | Beras 5Kg   | Sembako   | 65000 | 8     | 👁 ✏ 🗑     |
+|                      | +----------------------------------------------------------------+
+|                      |                                                                  |
+|                      | [<< Prev] 1 2 3 [Next >>]                                      |
++----------------------+------------------------------------------------------------------+
+
+
+| No | Komponen UI          | Tabel Database                   | Field yang Dipakai           | Relasi                             | Logic / Query              |
+| -- | -------------------- | -------------------------------- | ---------------------------- | ---------------------------------- | -------------------------- |
+| 1  | Nama Admin Login     | `users`                          | `nama`                       | -                                  | `auth()->user()->nama`     |
+| 2  | Search Barang        | `barang`                         | `kode_barang`, `nama_barang` | -                                  | Cari berdasarkan nama/kode |
+| 3  | Tombol Tambah Barang | `barang`                         | seluruh field barang         | FK kategori & supplier             | Create barang baru         |
+| 4  | List Barang          | `barang`                         | seluruh data barang          | -                                  | Menampilkan data barang    |
+| 5  | Kode Barang          | `barang`                         | `kode_barang`                | -                                  | Ditampilkan di tabel       |
+| 6  | Nama Barang          | `barang`                         | `nama_barang`                | -                                  | Ditampilkan di tabel       |
+| 7  | Nama Kategori        | `kategori`                       | `nama_kategori`              | `barang.kategori_id → kategori.id` | Join kategori              |
+| 8  | Harga Jual           | `barang`                         | `harga_jual`                 | -                                  | Format rupiah              |
+| 9  | Stok Barang          | `barang`                         | `stok`                       | -                                  | Ditampilkan stok           |
+| 10 | Detail Barang        | `barang`, `kategori`, `supplier` | semua field                  | FK                                 | Modal detail               |
+| 11 | Edit Barang          | `barang`                         | semua field                  | FK                                 | Update data                |
+| 12 | Hapus Barang         | `barang`                         | `id`                         | -                                  | Delete barang              |
+| 13 | Pagination           | `barang`                         | seluruh data                 | -                                  | `paginate(10)`             |
+
+
++====================================+
+| TAMBAH BARANG                     |
++====================================+
+| Kategori     [Dropdown ▼]         |
+| Supplier     [Dropdown ▼]         |
+| Kode Barang  [______________]     |
+| Nama Barang  [______________]     |
+| Harga Beli   [______________]     |
+| Harga Jual   [______________]     |
+| Stok         [______________]     |
+| Satuan       [______________]     |
++====================================+
+| [Simpan]      [Batal]             |
++====================================+
+
+Mapping Form → Database
+| Form Input  | Database Field |
+| ----------- | -------------- |
+| Kategori    | `kategori_id`  |
+| Supplier    | `supplier_id`  |
+| Kode Barang | `kode_barang`  |
+| Nama Barang | `nama_barang`  |
+| Harga Beli  | `harga_beli`   |
+| Harga Jual  | `harga_jual`   |
+| Stok        | `stok`         |
+| Satuan      | `satuan`       |
+
+
++======================================================+
+|                   DETAIL BARANG                      |
++======================================================+
+| Kode Barang     : BRG001                             |
+| Nama Barang     : Indomie Goreng                     |
+| Kategori        : Makanan Instan                     |
+| Supplier        : PT Indofood                        |
+| Harga Beli      : Rp 2.500                           |
+| Harga Jual      : Rp 3.500                           |
+| Stok            : 20                                 |
+| Satuan          : pcs                                |
+| Dibuat Pada     : 10 Mei 2026                        |
+| Update Terakhir : 11 Mei 2026                        |
++======================================================+
+|                    [ Tutup ]                         |
++======================================================+
+| No | Komponen UI     | Tabel Database | Field yang Dipakai | Relasi                             | Logic          |
+| -- | --------------- | -------------- | ------------------ | ---------------------------------- | -------------- |
+| 1  | Kode Barang     | `barang`       | `kode_barang`      | -                                  | Tampil detail  |
+| 2  | Nama Barang     | `barang`       | `nama_barang`      | -                                  | Tampil detail  |
+| 3  | Kategori        | `kategori`     | `nama_kategori`    | `barang.kategori_id → kategori.id` | Join kategori  |
+| 4  | Supplier        | `supplier`     | `nama_supplier`    | `barang.supplier_id → supplier.id` | Join supplier  |
+| 5  | Harga Beli      | `barang`       | `harga_beli`       | -                                  | Format rupiah  |
+| 6  | Harga Jual      | `barang`       | `harga_jual`       | -                                  | Format rupiah  |
+| 7  | Stok            | `barang`       | `stok`             | -                                  | Tampil stok    |
+| 8  | Satuan          | `barang`       | `satuan`           | -                                  | Tampil satuan  |
+| 9  | Dibuat Pada     | `barang`       | `created_at`       | -                                  | Format tanggal |
+| 10 | Update Terakhir | `barang`       | `updated_at`       | -                                  | Format tanggal |
+
+
++======================================================+
+|                   EDIT BARANG                        |
++======================================================+
+| Kategori       [ Makanan Instan ▼ ]                 |
+| Supplier       [ PT Indofood ▼ ]                    |
+|                                                      |
+| Kode Barang    [ BRG001____________ ]               |
+| Nama Barang    [ Indomie Goreng____ ]               |
+|                                                      |
+| Harga Beli     [ 2500______________ ]               |
+| Harga Jual     [ 3500______________ ]               |
+|                                                      |
+| Stok           [ 20________________ ]               |
+| Satuan         [ pcs_______________ ]               |
++======================================================+
+|      [ Simpan Perubahan ]   [ Batal ]               |
++======================================================+
+
+| No | Komponen Form     | Tabel Database | Field yang Dipakai    | Relasi                             | Action          |
+| -- | ----------------- | -------------- | --------------------- | ---------------------------------- | --------------- |
+| 1  | Dropdown Kategori | `kategori`     | `id`, `nama_kategori` | `barang.kategori_id → kategori.id` | Select kategori |
+| 2  | Dropdown Supplier | `supplier`     | `id`, `nama_supplier` | `barang.supplier_id → supplier.id` | Select supplier |
+| 3  | Kode Barang       | `barang`       | `kode_barang`         | -                                  | Update          |
+| 4  | Nama Barang       | `barang`       | `nama_barang`         | -                                  | Update          |
+| 5  | Harga Beli        | `barang`       | `harga_beli`          | -                                  | Update          |
+| 6  | Harga Jual        | `barang`       | `harga_jual`          | -                                  | Update          |
+| 7  | Stok              | `barang`       | `stok`                | -                                  | Update          |
+| 8  | Satuan            | `barang`       | `satuan`              | -                                  | Update          |

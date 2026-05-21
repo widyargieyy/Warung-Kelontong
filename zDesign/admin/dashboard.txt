@@ -1,0 +1,50 @@
++=====================================================================================================+
+| LOGO TOKO                               DASHBOARD ADMIN                     [Admin ▼][Logout]      |
++=====================================================================================================+
+
++----------------------+------------------------------------------------------------------+
+| SIDEBAR              | DASHBOARD ADMIN                                                 |
+|----------------------|------------------------------------------------------------------|
+| 🏠 Dashboard         | Selamat Datang, Admin                                           |
+| 📦 Barang            | Hari: Senin, 11 Mei 2026                                        |
+| 📂 Kategori          |                                                                  |
+| 🚚 Supplier          | +----------------+ +----------------+ +----------------------+  |
+| 📥 Stok Masuk        | | Total Barang  | | Total Supplier| | Total Kasir         |  |
+| 🛒 Penjualan         | |      152      | |      10       | |         4            |  |
+| 📊 Laporan           | +----------------+ +----------------+ +----------------------+  |
+| 👤 Profil            |                                                                  |
+| 🚪 Logout            | +----------------+ +----------------+ +----------------------+  |
+|                      | | Penjualan Hari | | Barang Habis  | | Stok Masuk Hari Ini|  |
+|                      | |      23        | |      12      | |         8          |  |
+|                      | +----------------+ +----------------+ +----------------------+  |
+|                      |                                                                  |
+|                      | =============================================================    |
+|                      | Riwayat Penjualan Terbaru                                      |
+|                      | -------------------------------------------------------------    |
+|                      | +------------------------------------------------------------+ |
+|                      | | Tanggal | Kasir | Total | Bayar | Kembalian              | |
+|                      | +------------------------------------------------------------+ |
+|                      | | 10:21   | Asep  | 24000 | 30000 | 6000                   | |
+|                      | | 11:00   | Dika  | 12000 | 20000 | 8000                   | |
+|                      | +------------------------------------------------------------+ |
+|                      | [Lihat Semua Penjualan]                                       |
++----------------------+------------------------------------------------------------------+
+
+
+| No | Komponen UI               | Tabel Database | Field yang Dipakai     | Relasi                         | Logic / Query             |
+| -- | ------------------------- | -------------- | ---------------------- | ------------------------------ | ------------------------- |
+| 1  | Nama Admin Login          | `users`        | `nama`                 | -                              | `auth()->user()->nama`    |
+| 2  | Role User                 | `users`        | `role`                 | -                              | Validasi role = admin     |
+| 3  | Total Barang              | `barang`       | `id`                   | -                              | Count semua barang        |
+| 4  | Total Supplier            | `supplier`     | `id`                   | -                              | Count supplier            |
+| 5  | Total Kasir               | `users`        | `role`                 | -                              | Count role = kasir        |
+| 6  | Penjualan Hari Ini        | `penjualan`    | `tanggal_penjualan`    | -                              | Count transaksi hari ini  |
+| 7  | Barang Habis              | `barang`       | `stok`                 | -                              | `stok <= 0`               |
+| 8  | Stok Masuk Hari Ini       | `stok_masuk`   | `tanggal_masuk`        | -                              | Count stok masuk hari ini |
+| 9  | Riwayat Penjualan         | `penjualan`    | seluruh data transaksi | `users.id → penjualan.user_id` | List transaksi terbaru    |
+| 10 | Nama Kasir pada Transaksi | `users`        | `nama`                 | `penjualan.user_id → users.id` | Nama kasir                |
+| 11 | Total Belanja             | `penjualan`    | `total_harga`          | -                              | Format rupiah             |
+| 12 | Uang Bayar                | `penjualan`    | `uang_bayar`           | -                              | Format rupiah             |
+| 13 | Kembalian                 | `penjualan`    | `kembalian`            | -                              | Format rupiah             |
+
+
