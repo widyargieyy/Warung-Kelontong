@@ -16,7 +16,6 @@
         </div>
     </div>
 @endsection
-
 @section('content')
     {{-- Alert --}}
     <div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">
@@ -29,7 +28,7 @@
         </div>
         <a href="#!" class="text-reset text-decoration-underline ms-auto link-offset-2"><b>Action Now</b></a>
     </div>
-
+    {{-- kurang tahu sih kalau git --}}
     {{-- Row 4: Targets & Goals --}}
     {{-- <div class="d-flex align-items-center mb-3 mt-2">
         <h4 class="fw-bold fs-md">My Targets &amp; Goals</h4>
@@ -260,9 +259,6 @@
         </div>
     </div>
     <!-- end row -->
-
-
-
 @endsection
 
 @push('scripts')

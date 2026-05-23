@@ -9,3 +9,4 @@
 
 <!-- Custom table -->
 <script src="{{ asset('assets') }}/js/pages/custom-table.js"></script>
+

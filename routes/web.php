@@ -13,8 +13,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'loginProses'])->name('login.proses');
 
 Route::middleware(['auth'])->group(function () {
-
     require __DIR__.'/role/admin.php';
     require __DIR__.'/role/kasir.php';
-
 });

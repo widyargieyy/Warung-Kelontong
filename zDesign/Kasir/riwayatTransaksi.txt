@@ -1,0 +1,62 @@
++======================================================================================================+
+| LOGO TOKO                               RIWAYAT TRANSAKSI                    [Kasir ▼][Logout]       |
++======================================================================================================+
+
++----------------------+----------------------------------------------------------------+
+| SIDEBAR              | RIWAYAT TRANSAKSI                                            |
+|----------------------|----------------------------------------------------------------|
+| 🏠 Dashboard         | Cari Invoice : [_____________________] [Cari]                |
+| 🛒 Transaksi         | Filter Tanggal : [ Hari Ini ▼ ]                              |
+| 🧾 Riwayat Transaksi |                                                                |
+| 📦 Data Barang       | +------------------------------------------------------------+ |
+| 👤 Profil            | | id trx | Tanggal  | Total     | Bayar     | Kasir | Aksi| |
+| 🚪 Logout            | +------------------------------------------------------------+ |
+|                      | | TRX001   | 11:20     | Rp12.000  | Rp20.000  | Ahmad |👁 | |
+|                      | | TRX001   | 12:05     | Rp25.000  | Rp30.000  | Ahmad |👁 | |
+|                      | | TRX001   | 13:42     | Rp50.000  | Rp50.000  | Ahmad |👁 | |
+|                      | +------------------------------------------------------------+ |
+|                      |                                                                |
+|                      | [< Prev]                                     [Next >]         |
++----------------------+----------------------------------------------------------------+
+
+
++==============================================================+
+| DETAIL TRANSAKSI - TRX-001                                 |
++==============================================================+
+
+Tanggal       : 23 Mei 2026 11:20
+Kasir         : Ahmad
+
++------------------------------------------------------------+
+| Barang            | Qty | Harga       | Subtotal          |
++------------------------------------------------------------+
+| Indomie Goreng    | 2   | Rp 3.500    | Rp 7.000          |
+| Aqua Botol        | 1   | Rp 5.000    | Rp 5.000          |
++------------------------------------------------------------+
+
+Total Belanja : Rp 12.000
+Uang Bayar    : Rp 20.000
+Kembalian     : Rp 8.000
+
+[ Cetak Struk ]   [ Kembali ]
+
+
+mapping
+| No | Komponen UI        | Tabel Database                    | Field yang Dipakai                                            | Relasi                                           | Logic / Query                           |
+| -- | ------------------ | --------------------------------- | ------------------------------------------------------------- | ------------------------------------------------ | --------------------------------------- |
+| 1  | Nama Kasir Login   | `users`                           | `name`                                                        | -                                                | `auth()->user()->name`                  |
+| 2  | Cari Transaksi     | `penjualans`                      | `id` / `kode_transaksi`                                       | -                                                | Search berdasarkan id transaksi         |
+| 3  | Filter Tanggal     | `penjualans`                      | `tanggal_penjualan`                                           | -                                                | Hari ini / minggu / bulan               |
+| 4  | List Riwayat       | `penjualans`                      | `tanggal_penjualan`, `total_harga`, `uang_bayar`, `kembalian` | `users.id → penjualans.user_id`                  | Menampilkan transaksi milik kasir login |
+| 5  | Nama Kasir         | `users`                           | `name`                                                        | `users.id → penjualans.user_id`                  | Menampilkan nama kasir                  |
+| 6  | Detail Transaksi   | `detail_penjualans`               | seluruh field                                                 | `penjualans.id → detail_penjualans.penjualan_id` | Detail item per transaksi               |
+| 7  | Nama Barang Detail | `barangs`                         | `nama_barang`                                                 | `barangs.id → detail_penjualans.barang_id`       | Nama barang transaksi                   |
+| 8  | Qty Barang         | `detail_penjualans`               | `qty`                                                         | -                                                | Jumlah pembelian                        |
+| 9  | Harga Barang       | `detail_penjualans`               | `harga`                                                       | -                                                | Harga saat transaksi                    |
+| 10 | Subtotal           | `detail_penjualans`               | `subtotal`                                                    | -                                                | `qty × harga`                           |
+| 11 | Total Belanja      | `penjualans`                      | `total_harga`                                                 | -                                                | Total transaksi                         |
+| 12 | Uang Bayar         | `penjualans`                      | `uang_bayar`                                                  | -                                                | Format rupiah                           |
+| 13 | Kembalian          | `penjualans`                      | `kembalian`                                                   | -                                                | `uang_bayar - total_harga`              |
+| 14 | Tombol Detail      | `penjualans`, `detail_penjualans` | seluruh field                                                 | `penjualans.id → detail_penjualans.penjualan_id` | Menampilkan detail transaksi            |
+| 15 | Cetak Struk        | `penjualans`, `detail_penjualans` | seluruh field                                                 | `penjualans.id → detail_penjualans.penjualan_id` | Cetak ulang struk                       |
+| 16 | Pagination         | `penjualans`                      | seluruh field                                                 | -                                                | `paginate(10)`                          |

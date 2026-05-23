@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'alamat' => 'Surabaya',
         ]);
 
-        User::create([
+        User::create([ 
             'nama' => 'Ahmad Kasir',
             'username' => 'kasir1',
             'password' => Hash::make('kasir123'),

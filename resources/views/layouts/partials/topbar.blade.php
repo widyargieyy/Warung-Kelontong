@@ -449,8 +449,8 @@
                             class="rounded-circle me-lg-2 d-flex" alt="user-image" />
                         <div class="d-lg-flex align-items-center gap-1 d-none">
                             <span>
-                                <h5 class="my-0 lh-1 pro-username">David Dev</h5>
-                                <span class="fs-xs lh-1">Admin Head</span>
+                                <h5 class="my-0 lh-1 pro-username">{{ Auth::user()->nama ?? 'gak ada' }}</h5>
+                                <span class="fs-xs lh-1">{{ Auth::user()->role }}</span>
                             </span>
                             <i class="ti ti-chevron-down align-middle"></i>
                         </div>
