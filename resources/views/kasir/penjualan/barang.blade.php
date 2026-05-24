@@ -5,12 +5,12 @@
 @section('page-title')
     <div class="page-title-head d-flex align-items-center">
         <div class="flex-grow-1">
-            <h4 class="page-main-title m-0">Transaksi Penjualan</h4>
+            <h4 class="page-main-title m-0">Data Barang</h4>
         </div>
         <div class="text-end">
             <ol class="breadcrumb m-0 py-0">
                 <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
-                <li class="breadcrumb-item active">Transaksi</li>
+                <li class="breadcrumb-item active">Data Barang</li>
             </ol>
         </div>
     </div>

@@ -224,7 +224,6 @@
     <script>
         $(function() {
 
-            // ─── URL routes (ditulis dari Blade agar CSRF & prefix aman) ──────────
             const URL_ADD = "{{ route('kasir.cart.add') }}";
             const URL_UPDATE = "{{ route('kasir.cart.update') }}";
             const URL_REMOVE = "{{ route('kasir.cart.remove') }}";
@@ -233,17 +232,13 @@
             const URL_SIMPAN = "{{ route('kasir.simpan') }}";
             const CSRF = "{{ csrf_token() }}";
 
-            // ─── Helper: format rupiah ────────────────────────────────────────────
             function rupiah(angka) {
                 return 'Rp ' + parseInt(angka).toLocaleString('id-ID');
             }
 
-            // ─── Render ulang tabel keranjang & ringkasan ─────────────────────────
             function renderCart(cart) {
                 const $body = $('#cart-body');
                 const $empty = $('#cart-empty-row');
-
-                // Hapus semua row kecuali empty-row
                 $body.find('tr:not(#cart-empty-row)').remove();
 
                 if (cart.count === 0) {
@@ -260,10 +255,8 @@
                 $('#total-belanja').text(cart.total_fmt);
                 $('#btn-simpan').prop('disabled', false);
 
-                // Hitung ulang kembalian
                 hitungKembalian(cart.total);
 
-                // Render baris per item
                 $.each(cart.items, function(i, item) {
                     const row = `
                 <tr data-id="${item.barang_id}">

@@ -1,275 +1,415 @@
-    @extends('layouts.app')
+@extends('layouts.app')
 
-    @section('title', 'Admin Dashboard')
+@section('title', 'Dashboard Admin')
 
-    @section('page-title')
-        <div class="page-title-head d-flex align-items-center">
-            <div class="flex-grow-1">
-                <h4 class="page-main-title m-0">Dashboard Admin</h4>
-            </div>  
-            <div class="text-end">
-                <ol class="breadcrumb m-0 py-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Paces</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Finance</li>
-                </ol>
-            </div>
+@section('page-title')
+    <div class="page-title-head d-flex align-items-center">
+        <div class="flex-grow-1">
+            <h4 class="page-main-title m-0">
+                Halo, {{ auth()->user()->nama }} 👋
+            </h4>
+            <p class="text-muted mb-0">
+                Selamat bekerja • {{ now()->translatedFormat('l, d F Y') }}
+            </p>
         </div>
-    @endsection
+        <div class="text-end">
+            <ol class="breadcrumb m-0 py-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </div>
+    </div>
+@endsection
 
-    @section('content')
-        {{-- Alert --}}
-        <div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            <i class="ti ti-lifebuoy fs-24 me-1"></i>
+@section('content')
+
+    {{-- ============================================================ --}}
+    {{-- HERO BANNER                                                   --}}
+    {{-- ============================================================ --}}
+    <div class="dashboard-hero rounded-4 mb-4 p-4 position-relative overflow-hidden">
+        <div class="hero-bg-shape"></div>
+        <div class="hero-bg-shape2"></div>
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 position-relative">
             <div>
-                <strong> Dear David Dev - </strong>
-                We kindly encourage you to review your recent transactions and financial commitments to ensure that your
-                account
-                is in good standing.
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="live-dot"></span>
+                    <small class="text-white-50 fw-medium">Sistem Aktif</small>
+                </div>
+                <h3 class="fw-bold text-white mb-1">
+                    Selamat Datang, {{ auth()->user()->nama }} 👋
+                </h3>
+                <p class="text-white-50 mb-0">
+                    Kelola transaksi penjualan dan pantau aktivitas hari ini.
+                </p>
             </div>
-            <a href="#!" class="text-reset text-decoration-underline ms-auto link-offset-2"><b>Action Now</b></a>
+            <div class="text-end">
+                <div class="text-white-50 small mb-1">{{ now()->translatedFormat('l') }}</div>
+                <div class="text-white fw-bold fs-5">{{ now()->translatedFormat('d F Y') }}</div>
+            </div>
+        </div>
+    </div>
+
+    {{-- ============================================================ --}}
+    {{-- STAT CARDS                                                    --}}
+    {{-- ============================================================ --}}
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <div class="stat-card card border-0 rounded-4 h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div class="stat-icon bg-primary-subtle rounded-3 d-flex align-items-center justify-content-center"
+                            style="width:48px;height:48px;">
+                            <i class="ti ti-package text-primary fs-22"></i>
+                        </div>
+                        <span class="badge bg-primary-subtle text-primary rounded-pill px-2 py-1 fs-xxs">Total Barang</span>
+                    </div>
+                    <div class="stat-number fw-bold text-dark">{{ $totalBarang }}</div>
+                    <div class="text-muted small mt-1">Total Barang Terdaftar</div>
+                </div>
+            </div>
         </div>
 
-        {{-- Row 4: Targets & Goals --}}
-        {{-- <div class="d-flex align-items-center mb-3 mt-2">
-            <h4 class="fw-bold fs-md">My Targets &amp; Goals</h4>
-            <a href="#!" class="text-decoration-underline fw-semibold fs-15 ms-auto link-offset-2 link-dark">See All</a>
+        <div class="col-md-4">
+            <div class="stat-card card border-0 rounded-4 h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div class="stat-icon bg-success-subtle rounded-3 d-flex align-items-center justify-content-center"
+                            style="width:48px;height:48px;">
+                            <i class="ti ti-building-store text-success fs-22"></i>
+                        </div>
+                        <span class="badge bg-success-subtle text-success rounded-pill px-2 py-1 fs-xxs">Total
+                            Supplier</span>
+                    </div>
+                    <div class="stat-number fw-bold text-dark">{{ $totalSupplier }}</div>
+                    <div class="text-muted small mt-1">Mitra Supplier Terdaftar</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stat-card card border-0 rounded-4 h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div class="stat-icon bg-info-subtle rounded-3 d-flex align-items-center justify-content-center"
+                            style="width:48px;height:48px;">
+                            <i class="ti ti-users text-info fs-22"></i>
+                        </div>
+                        <span class="badge bg-info-subtle text-info rounded-pill px-2 py-1 fs-xxs">Total Kasir</span>
+                    </div>
+                    <div class="stat-number fw-bold text-dark">{{ $totalKasir }}</div>
+                    <div class="text-muted small mt-1">Kasir Aktif</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <div class="stat-card card border-0 rounded-4 h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div class="stat-icon bg-primary-subtle rounded-3 d-flex align-items-center justify-content-center"
+                            style="width:48px;height:48px;">
+                            <i class="ti ti-shopping-cart text-primary fs-22"></i>
+                        </div>
+                        <span class="badge bg-primary-subtle text-primary rounded-pill px-2 py-1 fs-xxs">Penjualan Hari
+                            Ini</span>
+                    </div>
+                    <div class="stat-number fw-bold text-dark">{{ $totalPenjualanHariIni }}</div>
+                    <div class="text-muted small mt-1">Transaksi Penjualan</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stat-card card border-0 rounded-4 h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div class="stat-icon bg-danger-subtle rounded-3 d-flex align-items-center justify-content-center"
+                            style="width:48px;height:48px;">
+                            <i class="ti ti-alert-circle text-danger fs-22"></i>
+                        </div>
+                        <span class="badge bg-danger-subtle text-danger rounded-pill px-2 py-1 fs-xxs">Barang Habis</span>
+                    </div>
+                    <div class="stat-number fw-bold text-dark">{{ $totalBarangHabis }}</div>
+                    <div class="text-muted small mt-1">Perlu Restock Segera</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stat-card card border-0 rounded-4 h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div class="stat-icon bg-warning-subtle rounded-3 d-flex align-items-center justify-content-center"
+                            style="width:48px;height:48px;">
+                            <i class="ti ti-download text-warning fs-22"></i>
+                        </div>
+                        <span class="badge bg-warning-subtle text-warning rounded-pill px-2 py-1 fs-xxs">Stok Masuk</span>
+                    </div>
+                    <div class="stat-number fw-bold text-dark">{{ $totalStokMasukHariIni }}</div>
+                    <div class="text-muted small mt-1">Barang Masuk Hari Ini</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {{-- ============================================================ --}}
+    {{-- AKSES CEPAT                                                   --}}
+    {{-- ============================================================ --}}
+    <div class="card border-0 rounded-4 mb-4" style="background: var(--bs-light);">
+        <div class="card-body p-4">
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <i class="ti ti-bolt text-primary fs-18"></i>
+                <h6 class="fw-bold mb-0">Akses Cepat</h6>
+            </div>
+            <div class="d-flex gap-2 flex-wrap">
+                <a href="{{ route('kasir.transaksi') }}"
+                    class="btn btn-primary rounded-pill px-4 fw-semibold d-flex align-items-center gap-2">
+                    <i class="ti ti-shopping-cart"></i>
+                    Data Transaksi
+                </a>
+                <a href="{{ route('kasir.barang') }}"
+                    class="btn btn-outline-secondary rounded-pill px-4 fw-semibold d-flex align-items-center gap-2">
+                    <i class="ti ti-package"></i>
+                    Data Barang
+                </a>
+                <a href="{{ route('kasir.riwayat-transaksi') }}"
+                    class="btn btn-outline-secondary rounded-pill px-4 fw-semibold d-flex align-items-center gap-2">
+                    <i class="ti ti-history"></i>
+                    Data Kategori
+                </a>
+                <a href="{{ route('kasir.riwayat-transaksi') }}"
+                    class="btn btn-outline-secondary rounded-pill px-4 fw-semibold d-flex align-items-center gap-2">
+                    <i class="ti ti-history"></i>
+                    Data Supplier
+                </a>
+                <a href="{{ route('kasir.riwayat-transaksi') }}"
+                    class="btn btn-outline-secondary rounded-pill px-4 fw-semibold d-flex align-items-center gap-2">
+                    <i class="ti ti-history"></i>
+                    Data Stok Masuk
+                </a>
+                <a href="{{ route('kasir.riwayat-transaksi') }}"
+                    class="btn btn-outline-secondary rounded-pill px-4 fw-semibold d-flex align-items-center gap-2">
+                    <i class="ti ti-history"></i>
+                    Laporan
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {{-- ============================================================ --}}
+    {{-- TABEL RIWAYAT TRANSAKSI HARI INI                             --}}
+    {{-- ============================================================ --}}
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-header border-0 pt-4 px-4 pb-3">
+
+            <div class="d-flex align-items-center w-100">
+
+                {{-- Kiri --}}
+                <div class="d-flex align-items-center gap-2 flex-grow-1">
+
+                    <div class="bg-primary-subtle rounded-3 d-flex align-items-center justify-content-center"
+                        style="width:40px;height:40px;">
+                        <i class="ti ti-receipt text-primary fs-18"></i>
+                    </div>
+
+                    <div>
+                        <h6 class="fw-bold mb-0">
+                            10 Transaksi Terakhir
+                        </h6>
+
+                        <small class="text-muted">
+                            Daftar transaksi milik Anda
+                        </small>
+                    </div>
+
+                </div>
+
+                {{-- Kanan --}}
+                <div>
+                    <a href="{{ route('kasir.riwayat-transaksi') }}"
+                        class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-semibold text-nowrap">
+                        Lihat Semua
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4 text-muted fw-semibold fs-xxs text-uppercase py-3" style="width:130px;">No.
+                            Transaksi</th>
+                        <th class="text-muted fw-semibold fs-xxs text-uppercase py-3">Tanggal</th>
+                        <th class="text-muted fw-semibold fs-xxs text-uppercase py-3">Nama Kasir</th>
+                        <th class="text-muted fw-semibold fs-xxs text-uppercase py-3">Total Belanja</th>
+                        <th class="text-muted fw-semibold fs-xxs text-uppercase py-3">Uang Bayar</th>
+                        <th class="text-muted fw-semibold fs-xxs text-uppercase py-3">Kembalian</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($dataPenjualan as $data)
+                        <tr class="trx-row">
+                            <td class="ps-4">
+                                <span class="fw-bold text-primary">
+                                    #TX{{ str_pad($data->id, 3, '0', STR_PAD_LEFT) }}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="ti ti-clock text-muted fs-sm"></i>
+                                    <span class="fw-semibold">
+                                        {{ \Carbon\Carbon::parse($data->tanggal_penjualan)->locale('id')->translatedFormat('d M Y H:i') }}
+                                    </span>`
+                                </div>
+                            </td>
+                            <td>
+                                <span class="fw-bold text-dark">
+                                    {{ $data->user->nama }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="fw-bold text-dark">
+                                    Rp {{ number_format($data->total_harga, 0, ',', '.') }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="fw-semibold text-success">
+                                    Rp {{ number_format($data->uang_bayar, 0, ',', '.') }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="fw-semibold text-info">
+                                    Rp {{ number_format($data->kembalian, 0, ',', '.') }}
+                                </span>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <div class="d-flex flex-column align-items-center gap-2">
+                                    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center"
+                                        style="width:72px;height:72px;">
+                                        <i class="ti ti-receipt-off text-muted fs-32"></i>
+                                    </div>
+                                    <h6 class="fw-semibold mb-1 mt-2">Belum Ada Transaksi</h6>
+                                    <p class="text-muted mb-3 small">Transaksi hari ini akan muncul di sini</p>
+                                    <a href="{{ route('kasir.transaksi') }}"
+                                        class="btn btn-primary btn-sm rounded-pill px-4">
+                                        <i class="ti ti-plus me-1"></i> Buat Transaksi Baru
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        {{-- <div class="card-footer border-0 py-3 px-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <small class="text-muted">
+                    Total hari ini:
+                    <span class="fw-bold text-dark">{{ $dataPenjualan->count() ?? 0 }} transaksi</span>
+                </small>
+                <div data-table-pagination></div>
+            </div>
         </div> --}}
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-5">
-            <div class="col">
-                <div class="card border-0 rounded-3 text-white"
-                    style="background-image: url(assets/images/stock/small-1.jpg); background-size: cover">
-                    <div class="card-body bg-gradient bg-primary bg-opacity-90 rounded-3">
-                        <iconify-icon icon="solar:bus-bold-duotone" class="fs-36"></iconify-icon>
-                        <p class="text-white text-opacity-75 mb-1 text-uppercase">Goal</p>
-                        <h3 class="fw-semibold mb-2 fs-20 text-white">New Car</h3>
-                        <h4 class="fw-medium fs-16 mb-1 text-white">$<span data-target="25000">0</span></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card border-0 rounded-3 text-white"
-                    style="background-image: url(assets/images/stock/small-2.jpg); background-size: cover">
-                    <div class="card-body bg-gradient bg-secondary bg-opacity-90 rounded-3">
-                        <iconify-icon icon="solar:globus-bold-duotone" class="fs-36"></iconify-icon>
-                        <p class="text-white text-opacity-75 mb-1 text-uppercase">Goal</p>
-                        <h3 class="fw-semibold mb-2 fs-20 text-white">Vacation Trip</h3>
-                        <h4 class="fw-medium fs-16 mb-1 text-white">$<span data-target="7500">0</span></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card border-0 rounded-3 text-white"
-                    style="background-image: url(assets/images/stock/small-3.jpg); background-size: cover">
-                    <div class="card-body bg-gradient bg-warning bg-opacity-90 rounded-3">
-                        <iconify-icon icon="solar:square-academic-cap-2-bold-duotone" class="fs-36"></iconify-icon>
-                        <p class="text-white text-opacity-75 mb-1 text-uppercase">Goal</p>
-                        <h3 class="fw-semibold mb-2 fs-20 text-white">Education</h3>
-                        <h4 class="fw-medium fs-16 mb-1 text-white">$<span data-target="15200">0</span></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card border-0 rounded-3 text-white"
-                    style="background-image: url(assets/images/stock/small-4.jpg); background-size: cover">
-                    <div class="card-body bg-gradient bg-danger bg-opacity-90 rounded-3">
-                        <iconify-icon icon="solar:home-2-bold-duotone" class="fs-36"></iconify-icon>
-                        <p class="text-white text-opacity-75 mb-1 text-uppercase">Goal</p>
-                        <h3 class="fw-semibold mb-2 fs-20 text-white">New Home</h3>
-                        <h4 class="fw-medium fs-16 mb-1 text-white">$<span data-target="120000">0</span></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card border-0 rounded-3 text-white"
-                    style="background-image: url(assets/images/stock/small-5.jpg); background-size: cover">
-                    <div class="card-body bg-gradient bg-info bg-opacity-90 rounded-3">
-                        <iconify-icon icon="solar:banknote-2-bold-duotone" class="fs-36"></iconify-icon>
-                        <p class="text-white text-opacity-75 mb-1 text-uppercase">Goal</p>
-                        <h3 class="fw-semibold mb-2 fs-20 text-white">Emergency Fund</h3>
-                        <h4 class="fw-medium fs-16 mb-1 text-white">$<span data-target="10000">0</span></h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end row-->
+    </div>
 
-        {{-- Row 3: Recent Transactions Table --}}
-        <div class="row">
-            <div class="col-12">
-                <div data-table data-table-rows-per-page="8" class="card">
-                    <div class="card-header border-light justify-content-between">
-                        <h4 class="card-title">
-                            Recent Transactions
-                            <span class="text-muted fw-normal fs-14">(95.6k+ Transactions)</span>
-                        </h4>
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="me-2 fw-semibold">Filter By:</span>
-                            <div class="app-search">
-                                <select data-table-filter="transaction-status"
-                                    class="form-select form-control my-1 my-md-0">
-                                    <option value="All">All Status</option>
-                                    <option value="Success">Success</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Failed">Failed</option>
-                                    <option value="Processing">Processing</option>
-                                    <option value="Onhold">On Hold</option>
-                                </select>
-                                <i class="ti ti-filter-2 app-search-icon text-muted"></i>
-                            </div>
-
-                            <div>
-                                <select data-table-set-rows-per-page class="form-select form-control my-1 my-md-0">
-                                    <option value="5">5</option>
-                                    <option value="10" selected>10</option>
-                                    <option value="15">15</option>
-                                    <option value="20">20</option>
-                                </select>
-                            </div>
-                            <div class="app-search">
-                                <input data-table-search type="search" class="form-control"
-                                    placeholder="Search transactions..." />
-                                <i class="ti ti-search app-search-icon text-muted"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table table-custom table-nowrap table-centered table-select table-hover w-100 mb-0">
-                            <thead class="bg-light align-middle bg-opacity-25 thead-sm">
-                                <tr class="text-uppercase fs-xxs">
-                                    <th data-table-sort class="text-muted">ID</th>
-                                    <th data-table-sort class="text-muted">Name / Business</th>
-                                    <th class="text-muted">Description</th>
-                                    <th data-table-sort class="text-muted">Amount</th>
-                                    <th data-table-sort class="text-muted">Timestamp</th>
-                                    <th data-table-sort class="text-muted">Type</th>
-                                    <th data-table-sort class="text-muted">Payment Method</th>
-                                    <th data-table-sort data-column="transaction-status" class="text-muted">Status</th>
-                                    <th class="text-muted">•••</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><a href="#!" class="fw-medium text-reset">#TX901</a></td>
-                                    <td>
-                                        <img src="assets/images/users/user-5.jpg" alt=""
-                                            class="avatar-xs rounded-circle me-1" />
-                                        <span class="align-middle text-reset">Sophia Miller</span>
-                                    </td>
-                                    <td>Subscription Renewal</td>
-                                    <td class="text-success">USD $299.00</td>
-                                    <td>22 Nov,25 <small class="text-muted">08:24 am</small></td>
-                                    <td>Credit</td>
-                                    <td><img src="assets/images/cards/visa.svg" height="24" class="me-1" /> *4321
-                                    </td>
-                                    <td><span class="badge bg-success-subtle text-success p-1">Success</span></td>
-                                    <td><a href="#!" class="text-muted fs-20"><i class="ti ti-eye"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#!" class="fw-medium text-reset">#TX900</a></td>
-                                    <td>
-                                        <img src="assets/images/users/user-2.jpg" alt=""
-                                            class="avatar-xs rounded-circle me-1" />
-                                        <span class="align-middle">James Carter</span>
-                                    </td>
-                                    <td>Refund Processed</td>
-                                    <td class="text-danger">-USD $150.50</td>
-                                    <td>21 Nov,25 <small class="text-muted">07:40 pm</small></td>
-                                    <td>Debit</td>
-                                    <td><img src="assets/images/cards/mastercard.svg" height="24" class="me-1" />
-                                        *9333
-                                    </td>
-                                    <td><span class="badge bg-warning-subtle text-warning p-1">Pending</span></td>
-                                    <td><a href="#!" class="text-muted fs-20"><i class="ti ti-eye"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#!" class="fw-medium text-reset">#TX899</a></td>
-                                    <td>
-                                        <div class="avatar-xs d-inline-block me-1">
-                                            <span
-                                                class="avatar-title bg-secondary-subtle text-secondary fw-semibold rounded-circle">W</span>
-                                        </div>
-                                        WavePay
-                                    </td>
-                                    <td>Wallet Top-Up</td>
-                                    <td class="text-success">USD $620.00</td>
-                                    <td>21 Nov,25 <small class="text-muted">03:12 pm</small></td>
-                                    <td>Credit</td>
-                                    <td><img src="assets/images/cards/paypal.svg" height="24" class="me-1" /> PayPal
-                                    </td>
-                                    <td><span class="badge bg-success-subtle text-success p-1">Success</span></td>
-                                    <td><a href="#!" class="text-muted fs-20"><i class="ti ti-eye"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#!" class="fw-medium text-reset">#TX898</a></td>
-                                    <td>
-                                        <img src="assets/images/users/user-3.jpg" alt=""
-                                            class="avatar-xs rounded-circle me-1" />
-                                        <span class="align-middle">Liam Thompson</span>
-                                    </td>
-                                    <td>Service Charge</td>
-                                    <td class="text-danger">-USD $19.99</td>
-                                    <td>20 Nov,25 <small class="text-muted">11:09 am</small></td>
-                                    <td>Debit</td>
-                                    <td><img src="assets/images/cards/stripe.svg" height="24" class="me-1" /> Stripe
-                                    </td>
-                                    <td><span class="badge bg-danger-subtle text-danger p-1">Failed</span></td>
-                                    <td><a href="#!" class="text-muted fs-20"><i class="ti ti-eye"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#!" class="fw-medium text-reset">#TX897</a></td>
-                                    <td>
-                                        <img src="assets/images/users/user-4.jpg" alt=""
-                                            class="avatar-xs rounded-circle me-1" />
-                                        <span class="align-middle">Emma Stone</span>
-                                    </td>
-                                    <td>Invoice #2112</td>
-                                    <td class="text-success">EUR €420.72</td>
-                                    <td>18 Nov,25 <small class="text-muted">09:51 pm</small></td>
-                                    <td>Credit</td>
-                                    <td><img src="assets/images/cards/mastercard.svg" height="24" class="me-1" />
-                                        *2112
-                                    </td>
-                                    <td><span class="badge bg-success-subtle text-success p-1">Success</span></td>
-                                    <td><a href="#!" class="text-muted fs-20"><i class="ti ti-eye"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#!" class="fw-medium text-reset">#TX889</a></td>
-                                    <td>
-                                        <img src="assets/images/users/user-3.jpg" alt=""
-                                            class="avatar-xs rounded-circle me-1" />
-                                        <span class="align-middle">Emily Frost</span>
-                                    </td>
-                                    <td>Client Invoice #2455</td>
-                                    <td class="text-success">USD $980.00</td>
-                                    <td>09 Nov,24 <small class="text-muted">11:21 am</small></td>
-                                    <td>Credit</td>
-                                    <td><img src="assets/images/cards/paypal.svg" height="24" class="me-1" /> PayPal
-                                    </td>
-                                    <td><span class="badge bg-success-subtle text-success p-1">Success</span></td>
-                                    <td><a href="#!" class="text-muted fs-20"><i class="ti ti-eye"></i></a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer border-0">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div data-table-pagination-info="transactions"></div>
-                            <div data-table-pagination></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end row -->
+@endsection
 
 
 
-    @endsection
+@push('styles')
+    <style>
+        /* ── Hero Banner ───────────────────────────────────────────── */
+        .dashboard-hero {
+            background: linear-gradient(135deg, #3b7ddd 0%, #1a4fa0 100%);
+            min-height: 110px;
+        }
 
-    @push('scripts')
-        <script src="assets/js/pages/dashboard-finance.js"></script>
-    @endpush
+        .hero-bg-shape {
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 160px;
+            height: 160px;
+            background: rgba(255, 255, 255, .06);
+            border-radius: 50%;
+        }
+
+        .hero-bg-shape2 {
+            position: absolute;
+            bottom: -50px;
+            right: 80px;
+            width: 220px;
+            height: 220px;
+            background: rgba(255, 255, 255, .04);
+            border-radius: 50%;
+        }
+
+        /* ── Live dot ──────────────────────────────────────────────── */
+        .live-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px rgba(74, 222, 128, .3);
+            animation: pulse-dot 1.8s infinite;
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 2px rgba(74, 222, 128, .3);
+            }
+
+            50% {
+                box-shadow: 0 0 0 5px rgba(74, 222, 128, .1);
+            }
+        }
+
+        /* ── Stat Cards ────────────────────────────────────────────── */
+        .stat-card {
+            transition: transform .2s ease, box-shadow .2s ease;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .09) !important;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        /* ── Table rows ────────────────────────────────────────────── */
+        .trx-row {
+            transition: background .15s;
+        }
+
+        .trx-row:hover {
+            background: rgba(59, 125, 221, .04);
+        }
+
+        .trx-row td {
+            border-color: rgba(0, 0, 0, .04);
+            padding-top: 14px;
+            padding-bottom: 14px;
+        }
+    </style>
+@endpush

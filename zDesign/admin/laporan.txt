@@ -44,6 +44,7 @@
 | TOTAL PENJUALAN : Rp 36.000                                         |
 +=====================================================================+
 
+mapping
 | UI Laporan | Database    | Field               |
 | ---------- | ----------- | ------------------- |
 | Tanggal    | `penjualan` | `tanggal_penjualan` |
@@ -63,6 +64,7 @@
 | BR03 | Beras       | 8    | 65000       | kg                     |
 +=====================================================================+
 
+mapping
 | UI Laporan  | Database | Field         |
 | ----------- | -------- | ------------- |
 | Kode Barang | `barang` | `kode_barang` |

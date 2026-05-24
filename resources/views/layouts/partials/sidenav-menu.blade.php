@@ -1,20 +1,21 @@
-<ul class="side-nav">
-    {{-- ==================== MAIN ==================== --}}
-    <li class="side-nav-title mt-2" data-lang="main">Main</li>
+@if (Auth::user()->role == 'kasir')
+    <ul class="side-nav">
+        {{-- ==================== MAIN ==================== --}}
+        <li class="side-nav-title mt-2" data-lang="main">Main</li>
 
-    {{-- Dashboards --}}
-    <li class="side-nav-item">
-        {{-- Chat --}}
-        <a href="{{ route('kasir.dashboard') }}" class="side-nav-link ">
-            <span class="menu-icon"><i class="ti ti-dashboard"></i></span>
-            <span class="menu-text" data-lang="apps-chat">Dashboard</span>
-        </a>
-    </li>
+        {{-- Dashboards --}}
+        <li class="side-nav-item">
+            {{-- Chat --}}
+            <a href="{{ route('kasir.dashboard') }}" class="side-nav-link ">
+                <span class="menu-icon"><i class="ti ti-dashboard"></i></span>
+                <span class="menu-text" data-lang="apps-chat">Dashboard</span>
+            </a>
+        </li>
 
-    {{-- ==================== APPS ==================== --}}
-    <li class="side-nav-title mt-2" data-lang="apps">Apps</li>
+        {{-- ==================== APPS ==================== --}}
+        <li class="side-nav-title mt-2" data-lang="apps">Apps</li>
 
-    {{-- Projects
+        {{-- Projects
     <li class="side-nav-item">
         <a data-bs-toggle="collapse" href="#projects" aria-expanded="false" aria-controls="projects"
             class="side-nav-link">
@@ -33,39 +34,107 @@
         </div>
     </li> --}}
 
-    {{-- Transaksi --}}
-    <li class="side-nav-item">
-        <a href="{{ route('kasir.transaksi') }}" class="side-nav-link">
-            <span class="menu-icon">
-                <i class="ti ti-shopping-cart"></i>
-            </span>
-            <span class="menu-text">
-                Transaksi
-            </span>
-        </a>
-    </li>
+        {{-- Transaksi --}}
+        <li class="side-nav-item">
+            <a href="{{ route('kasir.transaksi') }}" class="side-nav-link">
+                <span class="menu-icon">
+                    <i class="ti ti-shopping-cart"></i>
+                </span>
+                <span class="menu-text">
+                    Transaksi
+                </span>
+            </a>
+        </li>
 
-    {{-- Riwayat Transaksi --}}
-    <li class="side-nav-item">
-        <a href="{{ route('kasir.riwayat-transaksi') }}" class="side-nav-link">
-            <span class="menu-icon">
-                <i class="ti ti-receipt-2"></i>
-            </span>
-            <span class="menu-text">
-                Riwayat Transaksi
-            </span>
-        </a>
-    </li>
+        {{-- Riwayat Transaksi --}}
+        <li class="side-nav-item">
+            <a href="{{ route('kasir.riwayat-transaksi') }}" class="side-nav-link">
+                <span class="menu-icon">
+                    <i class="ti ti-receipt-2"></i>
+                </span>
+                <span class="menu-text">
+                    Riwayat Transaksi
+                </span>
+            </a>
+        </li>
 
-    {{-- Data Barang --}}
-    <li class="side-nav-item">
-        <a href="{{ route('kasir.barang') }}" class="side-nav-link">
-            <span class="menu-icon">
-                <i class="ti ti-package"></i>
-            </span>
-            <span class="menu-text">
-                Data Barang
-            </span>
-        </a>
-    </li>
-</ul>
+        {{-- Data Barang --}}
+        <li class="side-nav-item">
+            <a href="{{ route('kasir.barang') }}" class="side-nav-link">
+                <span class="menu-icon">
+                    <i class="ti ti-package"></i>
+                </span>
+                <span class="menu-text">
+                    Data Barang
+                </span>
+            </a>
+        </li>
+    </ul>
+@endif
+
+@if (Auth::user()->role == 'admin')
+    <ul class="side-nav">
+        {{-- ==================== MAIN ==================== --}}
+        <li class="side-nav-title mt-2" data-lang="main">Main</li>
+
+        {{-- Dashboard --}}
+        <li class="side-nav-item">
+            <a href="{{ route('admin.dashboard') }}" class="side-nav-link">
+                <span class="menu-icon"><i class="ti ti-layout-dashboard"></i></span>
+                <span class="menu-text">Dashboard</span>
+            </a>
+        </li>
+
+        {{-- ==================== APPS ==================== --}}
+        <li class="side-nav-title mt-2" data-lang="apps">Apps</li>
+
+        {{-- Penjualan --}}
+        <li class="side-nav-item">
+            <a href="#" class="side-nav-link">
+                <span class="menu-icon"><i class="ti ti-receipt"></i></span>
+                <span class="menu-text">Penjualan</span>
+            </a>
+        </li>
+
+        {{-- Barang --}}
+        <li class="side-nav-item">
+            <a href="#" class="side-nav-link">
+                <span class="menu-icon"><i class="ti ti-package"></i></span>
+                <span class="menu-text">Barang</span>
+            </a>
+        </li>
+
+        {{-- Kategori --}}
+        <li class="side-nav-item">
+            <a href="#" class="side-nav-link">
+                <span class="menu-icon"><i class="ti ti-tag"></i></span>
+                <span class="menu-text">Kategori</span>
+            </a>
+        </li>
+
+        {{-- Supplier --}}
+        <li class="side-nav-item">
+            <a href="#" class="side-nav-link">
+                <span class="menu-icon"><i class="ti ti-building-store"></i></span>
+                <span class="menu-text">Supplier</span>
+            </a>
+        </li>
+
+        {{-- Stok Masuk --}}
+        <li class="side-nav-item">
+            <a href="#" class="side-nav-link">
+                <span class="menu-icon"><i class="ti ti-packages"></i></span>
+                <span class="menu-text">Stok Masuk</span>
+            </a>
+        </li>
+
+        {{-- Laporan --}}
+        <li class="side-nav-item">
+            <a href="#" class="side-nav-link">
+                <span class="menu-icon"><i class="ti ti-chart-bar"></i></span>
+                <span class="menu-text">Laporan</span>
+            </a>
+        </li>
+
+    </ul>
+@endif

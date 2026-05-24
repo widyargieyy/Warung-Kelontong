@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class PenjualanController extends Controller
 {
-    // ─── Halaman utama transaksi ──────────────────────────────────────────────
     public function kasirTransaksi()
     {
         $datas = [
@@ -21,17 +20,15 @@ class PenjualanController extends Controller
         return view('kasir.penjualan.index', $datas);
     }
 
-    // ─── Tambah barang ke cart (session) ─────────────────────────────────────
+
     public function addToCart(Request $request)
     {
         $barang = Barang::findOrFail($request->barang_id);
         $cart   = session()->get('cart', []);
 
         if (isset($cart[$barang->id])) {
-            // Sudah ada → naikkan qty
             $cart[$barang->id]['qty'] += 1;
         } else {
-            // Belum ada → masukkan baru
             $cart[$barang->id] = [
                 'barang_id'   => $barang->id,
                 'kode_barang' => $barang->kode_barang,
@@ -41,9 +38,7 @@ class PenjualanController extends Controller
                 'qty'         => 1,
             ];
         }
-
         session()->put('cart', $cart);
-
         return response()->json([
             'success' => true,
             'message' => $barang->nama_barang . ' ditambahkan ke keranjang.',
@@ -51,7 +46,6 @@ class PenjualanController extends Controller
         ]);
     }
 
-    // ─── Update qty item di cart ──────────────────────────────────────────────
     public function updateCart(Request $request)
     {
         $cart = session()->get('cart', []);
@@ -65,7 +59,6 @@ class PenjualanController extends Controller
         if ($qty <= 0) {
             unset($cart[$id]);
         } else {
-            // Batasi qty agar tidak melebihi stok
             $cart[$id]['qty'] = min($qty, $cart[$id]['stok']);
         }
 
