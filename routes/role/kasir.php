@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BarangController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenjualanController;
@@ -23,4 +24,7 @@ Route::prefix('kasir')
 
         Route::get('/riwayat-transaksi', [RiwayatTransaksiController::class, 'index'])->name('riwayat-transaksi');
         Route::get('/riwayat-transaksi/detail/{id}', [RiwayatTransaksiController::class, 'detailTransaksi'])->name('riwayat-transaksi.detail');
+
+        Route::get('/barang', [BarangController::class, 'index'])->name('barang');
+        Route::get('/barang/{id}',   [BarangController::class, 'detailBarang'])->name('barang.detail');
     });

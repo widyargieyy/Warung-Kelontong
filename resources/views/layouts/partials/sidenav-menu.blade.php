@@ -49,7 +49,7 @@
     <li class="side-nav-item">
         <a href="{{ route('kasir.riwayat-transaksi') }}" class="side-nav-link">
             <span class="menu-icon">
-                <i class="ti ti-shopping-cart"></i>
+                <i class="ti ti-receipt-2"></i>
             </span>
             <span class="menu-text">
                 Riwayat Transaksi
@@ -59,7 +59,7 @@
 
     {{-- Data Barang --}}
     <li class="side-nav-item">
-        <a href="#" class="side-nav-link">
+        <a href="{{ route('kasir.barang') }}" class="side-nav-link">
             <span class="menu-icon">
                 <i class="ti ti-package"></i>
             </span>
