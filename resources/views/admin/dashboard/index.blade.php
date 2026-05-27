@@ -187,16 +187,6 @@
                     <i class="ti ti-history"></i>
                     Data Supplier
                 </a>
-                <a href="{{ route('kasir.riwayat-transaksi') }}"
-                    class="btn btn-outline-secondary rounded-pill px-4 fw-semibold d-flex align-items-center gap-2">
-                    <i class="ti ti-history"></i>
-                    Data Stok Masuk
-                </a>
-                <a href="{{ route('kasir.riwayat-transaksi') }}"
-                    class="btn btn-outline-secondary rounded-pill px-4 fw-semibold d-flex align-items-center gap-2">
-                    <i class="ti ti-history"></i>
-                    Laporan
-                </a>
             </div>
         </div>
     </div>

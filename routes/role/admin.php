@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminBarangController;
 use App\Http\Controllers\AdminTransaksiController;
@@ -25,4 +26,9 @@ Route::prefix('admin')
         Route::post('/data-kategori', [KategoriController::class, 'store'])->name('data-kategori.store');
         Route::put('/data-kategori/{id}', [KategoriController::class, 'update'])->name('data-kategori.update');
         Route::delete('/data-kategori/{id}', [KategoriController::class, 'destroy'])->name('data-kategori.destroy');
+
+        Route::get('/data-supplier', [SupplierController::class, 'index'])->name('data-supplier');
+        Route::post('/data-supplier', [SupplierController::class, 'store'])->name('data-supplier.store');
+        Route::put('/data-supplier/{id}', [SupplierController::class, 'update'])->name('data-supplier.update');
+        Route::delete('/data-supplier/{id}', [SupplierController::class, 'destroy'])->name('data-supplier.destroy');
     });

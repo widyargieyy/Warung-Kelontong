@@ -20,6 +20,7 @@
 |                      | [<< Prev] 1 2 3 [Next >>]                                      |
 +----------------------+------------------------------------------------------------------+
 
+mapping
 | No | Komponen UI            | Tabel Database | Field yang Dipakai | Relasi | Logic / Query          |
 | -- | ---------------------- | -------------- | ------------------ | ------ | ---------------------- |
 | 1  | Nama Admin Login       | `users`        | `nama`             | -      | `auth()->user()->nama` |

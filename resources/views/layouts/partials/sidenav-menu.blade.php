@@ -90,7 +90,7 @@
 
         {{-- Penjualan --}}
         <li class="side-nav-item">
-            <a href="#" class="side-nav-link">
+            <a href="{{ route('admin.data-transaksi') }}" class="side-nav-link">
                 <span class="menu-icon"><i class="ti ti-receipt"></i></span>
                 <span class="menu-text">Penjualan</span>
             </a>
@@ -98,7 +98,7 @@
 
         {{-- Barang --}}
         <li class="side-nav-item">
-            <a href="#" class="side-nav-link">
+            <a href="{{ route('admin.data-barang') }}" class="side-nav-link">
                 <span class="menu-icon"><i class="ti ti-package"></i></span>
                 <span class="menu-text">Barang</span>
             </a>
@@ -106,7 +106,7 @@
 
         {{-- Kategori --}}
         <li class="side-nav-item">
-            <a href="#" class="side-nav-link">
+            <a href="{{ route('admin.data-kategori') }}" class="side-nav-link">
                 <span class="menu-icon"><i class="ti ti-tag"></i></span>
                 <span class="menu-text">Kategori</span>
             </a>
@@ -114,27 +114,10 @@
 
         {{-- Supplier --}}
         <li class="side-nav-item">
-            <a href="#" class="side-nav-link">
+            <a href="{{ route('admin.data-supplier') }}" class="side-nav-link">
                 <span class="menu-icon"><i class="ti ti-building-store"></i></span>
                 <span class="menu-text">Supplier</span>
             </a>
         </li>
-
-        {{-- Stok Masuk --}}
-        <li class="side-nav-item">
-            <a href="#" class="side-nav-link">
-                <span class="menu-icon"><i class="ti ti-packages"></i></span>
-                <span class="menu-text">Stok Masuk</span>
-            </a>
-        </li>
-
-        {{-- Laporan --}}
-        <li class="side-nav-item">
-            <a href="#" class="side-nav-link">
-                <span class="menu-icon"><i class="ti ti-chart-bar"></i></span>
-                <span class="menu-text">Laporan</span>
-            </a>
-        </li>
-
     </ul>
 @endif
