@@ -8,6 +8,7 @@ use App\Http\Controllers\RiwayatTransaksiController;
 
 Route::prefix('kasir')
     ->name('kasir.')
+    ->middleware('kasir')
     ->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'toDashboardKasir'])->name('dashboard');
         Route::get('/transaksi', [PenjualanController::class, 'kasirTransaksi'])->name('transaksi');

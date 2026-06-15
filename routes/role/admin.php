@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminTransaksiController;
 
 Route::prefix('admin')
     ->name('admin.')
+    ->middleware('admin')
     ->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'toDashboardAdmin'])->name('dashboard');
 
